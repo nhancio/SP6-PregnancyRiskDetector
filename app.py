@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, send_from_directory
+from flask import Flask, render_template, request, redirect, url_for
 import pickle
 import numpy as np
 import os
@@ -31,55 +31,58 @@ def results():
 
 @app.route("/submit", methods=["POST"])
 def submit():
-    try:
-        # Load label encoders and decision tree model
-        static_folder = app.static_folder
-        with open(os.path.join(static_folder, "label_encoders.pkl"), "rb") as le_file:
-            label_encoders = pickle.load(le_file)
-        with open(os.path.join(static_folder, "preg_model.pkl"), "rb") as model_file:
-            decision_tree_model = pickle.load(model_file)
-    except FileNotFoundError as e:
-        return render_template("dashboard.html", error=f"File not found: {e.filename}")
+    # try:
+    # Load label encoders and decision tree model directly from the static folder
+    static_folder = os.path.join(app.root_path, 'static')
+    with open(os.path.join(static_folder, "label_encoders.pkl"), "rb") as le_file:
+        label_encoders = pickle.load(le_file)
+    with open(os.path.join(static_folder, "preg_model.pkl"), "rb") as model_file:
+        decision_tree_model = pickle.load(model_file)
+    # except FileNotFoundError as e:
+    # return render_template("dashboard.html", error=f"File not found: {e.filename}")
 
     # List of input features
-    input_features = [
-        'DELIVERY_MODE_df5', 'BP_df5', 'DEL_COMPLICATIONS', 'FACILITY_TYPE_df5',
-        'BLOOD_GRP_df5', 'ASHA_DTLS_df5', 'DOC_ANM_NAME', 'INDICATION_FOR_C_SECTION_df5',
-        'DISTRICT_anc', 'DEATH_df5', 'HEIGHT_df5', 'FACILITY_NAME_df5', 'PLACE_OF_DELIVERY',
-        'BLOOD_SUGAR_df5', 'MODE_OF_DELIVERY', 'AGE_preg', 'CONDUCT_BY', 'WEIGHT_df2',
-        'HEMOGLOBIN_df5', 'WEIGHT_anc', 'GRAVIDA_df5', 'WEIGHT_child', 'GRAVIDA', 'ABORTIONS_df5'
-    ]
+    input_features = ['DELIVERY_MODE_df5', 'BP_df5', 'DEL_COMPLICATIONS',
+       'FACILITY_TYPE_df5', 'BLOOD_GRP_df5', 'ASHA_DTLS_df5', 'DOC_ANM_NAME', 'INDICATION_FOR_C_SECTION_df5',
+       'DISTRICT_anc', 'DEATH_df5', 'HEIGHT_df5', 'FACILITY_NAME_df5', 'PLACE_OF_DELIVERY',
+       'BLOOD_SUGAR_df5', 'MODE_OF_DELIVERY', 'AGE_preg', 'CONDUCT_BY',
+       'WEIGHT_df2', 'HEMOGLOBIN_df5', 'WEIGHT_anc', 'GRAVIDA_df5', 'WEIGHT_child', 'GRAVIDA',
+       'ABORTIONS_df5']
 
     # Collect form data
     form_data = {feature: request.form.get(feature) for feature in input_features}
+    form_data["GRAVIDA_df5"] = "G1"  # Hardcoded value for GRAVIDA_df5
+
+    # Validate form data
+    # for key, value in form_data.items():
+    #     if value is None or value == "":
+    #         return render_template("dashboard.html", error=f"Missing value for {key}")
 
     # Encode form data using label encoders
     encoded_data = []
     for feature in input_features:
         if feature in label_encoders:
-            encoded_data.append(label_encoders[feature].transform([form_data[feature]])[0])
+            try:
+                encoded_data.append(label_encoders[feature].transform([form_data[feature]])[0])
+            except ValueError:
+                return f"<h1 style='color: red;'>Invalid value for {feature}</h1>"
         else:
-            encoded_data.append(float(form_data[feature]))
+            try:
+                encoded_data.append(float(form_data[feature]))
+            except ValueError:
+                return f"<h1 style='color: red;'>Invalid numeric value for {feature}</h1>"
 
     # Convert encoded data to numpy array
     input_array = np.array(encoded_data).reshape(1, -1)
 
     # Predict using the decision tree model
-    prediction = decision_tree_model.predict(input_array)
-    print("------------------------------------")
-    print("------------------------------------")
-    print("------------------------------------")
-    
+    try:
+        prediction = decision_tree_model.predict(input_array)
+    except Exception as e:
+        return f"<h1 style='color: red;'>Prediction error: {str(e)}</h1>"
 
-    
-    print(f"Prediction: {prediction}")
     # Redirect to the results page with the prediction
     return redirect(url_for("results", prediction=prediction[0]))
 
-@app.route('/static/<path:filename>')
-def static_files(filename):
-    return send_from_directory(app.static_folder, filename)
-
 if __name__ == "__main__":
     app.run(debug=True)
-
