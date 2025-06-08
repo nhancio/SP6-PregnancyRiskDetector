@@ -47,7 +47,23 @@
 <body>
     <div class="container">
         <h1>Model Prediction Result</h1>
-        <p>The predicted outcome is: <strong>{{ prediction }}</strong></p>
+        <p>The predicted outcome is: 
+            <strong>
+                {% if prediction == "0" %}
+                    Live
+                {% elif prediction == "1" %}
+                    Still Birth
+                {% elif prediction == "2" %}
+                    Twin Birth
+                {% elif prediction == "3" %}
+                    IUD
+                {% elif prediction == "4" %}
+                    More than Two
+                {% else %}
+                    Unknown
+                {% endif %}
+            </strong>
+        </p>
         <form action="/dashboard">
             <button type="submit">Back to Dashboard</button>
         </form>

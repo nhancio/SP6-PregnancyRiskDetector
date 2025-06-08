@@ -61,10 +61,10 @@ def submit():
     
     # Encode form data using label encoders
     print("Encoding form data...")
-
+    # del label_encoders["ASHA_DTLS_df5"]
     encoded_data = []
     for feature in input_features:
-        if feature in label_encoders:
+        if feature in label_encoders and feature != "ASHA_DTLS_df5" and feature != "HEIGHT_df5" and feature != "WEIGHT_anc":
             try:
                 encoded_data.append(label_encoders[feature].transform([form_data[feature]])[0])
             except ValueError:
