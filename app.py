@@ -58,7 +58,10 @@ def submit():
     #     if value is None or value == "":
     #         return render_template("dashboard.html", error=f"Missing value for {key}")
 
+    
     # Encode form data using label encoders
+    print("Encoding form data...")
+
     encoded_data = []
     for feature in input_features:
         if feature in label_encoders:
@@ -73,11 +76,16 @@ def submit():
                 return f"<h1 style='color: red;'>Invalid numeric value for {feature}</h1>"
 
     # Convert encoded data to numpy array
+    print("Converting encoded data to numpy array...")
     input_array = np.array(encoded_data).reshape(1, -1)
+    print("Input array shape:", input_array.shape)
+
 
     # Predict using the decision tree model
     try:
+        print("Making prediction...")
         prediction = decision_tree_model.predict(input_array)
+        print("Prediction made:", prediction)
     except Exception as e:
         return f"<h1 style='color: red;'>Prediction error: {str(e)}</h1>"
 
