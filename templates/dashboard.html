@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom right, #e6f7ff, #b3e5fc);
+            margin: 0;
+            padding: 20px;
+        }
+        .branding {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px; /* Adjusted margin */
+        }
+        .branding img {
+            width: 50px;
+            height: 50px;
+            margin-right: 10px; /* Space between logo and text */
+        }
+        .branding h1 {
+            color: #0078d7;
+            font-size: 24px;
+            margin: 0; /* Remove extra margin */
+        }
+        .banner {
+            width: 100%;
+            height: 200px;
+            background: url('/static/banner.jpg') no-repeat center center;
+            background-size: cover;
+            margin-bottom: -175px; /* Reduced margin */
+            border-radius: 12px;
+        }
+        .section {
+            width: 90%; /* Reduced width */
+            background-color: #ffffff;
+            padding: 15px; /* Adjusted padding */
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            margin: 0 auto 20px; /* Centered and adjusted margin */
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .section-header .icon {
+            background-color: #0078d7;
+            padding: 10px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        .section-header .icon svg {
+            width: 30px; /* Enlarged icon */
+            height: 30px;
+        }
+        h2 {
+            color: #333;
+            margin: 0;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px; /* Uniform padding */
+            margin-bottom: 8px; /* Reduced margin to minimize gaps */
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-sizing: border-box; /* Prevent overflow */
+        }
+        .input-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        .input-group svg {
+            margin-right: 8px;
+            color: #0078d7;
+            width: 20px;
+            height: 20px;
+        }
+        button {
+            background: linear-gradient(to right, #0078d7, #005a9e);
+            color: #fff;
+            border: none;
+            padding: 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+        }
+        button:hover {
+            background: linear-gradient(to right, #005a9e, #003f6b);
+        }
+        .message {
+            text-align: center;
+            color: green;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="branding">
+        <img src="/static/3.jpeg" alt="App Logo">
+        <h1>Welcome to the portal</h1>
+    </div>
+    <div class="banner"></div>
+    {% if message %}
+        <p class="message">{{ message }}</p>
+    {% endif %}
+    <form method="POST" action="/submit">
+        <div class="section">
+            <div class="section-header">
+                <div class="icon">
+                    <img src="/static/4.jpeg" alt="Section Icon" style="width: 30px; height: 30px; border-radius: 50%;">
+                </div>
+                <h2>Section 1: Delivery Details</h2>
+            </div>
+            <label for="abortions">Abortions:</label>
+            <input type="number" id="abortions" name="abortions" required>
+            <label for="gravida">Gravida:</label>
+            <input type="number" id="gravida" name="gravida" required>
+            <label for="time_of_birth">Time of Birth:</label>
+            <input type="text" id="time_of_birth" name="time_of_birth" required>
+            <label for="mode_of_delivery">Mode of Delivery:</label>
+            <input type="text" id="mode_of_delivery" name="mode_of_delivery" required>
+            <label for="place_of_delivery">Place of Delivery:</label>
+            <input type="text" id="place_of_delivery" name="place_of_delivery" required>
+            <label for="conduct_by">Conducted By:</label>
+            <input type="text" id="conduct_by" name="conduct_by" required>
+            <label for="del_complications">Delivery Complications:</label>
+            <input type="text" id="del_complications" name="del_complications" required>
+            <label for="indication_for_c_section">Indication for C-Section:</label>
+            <input type="text" id="indication_for_c_section" name="indication_for_c_section" required>
+        </div>
+        <div class="section">
+            <div class="section-header">
+                <div class="icon">
+                    <img src="/static/4.jpeg" alt="Section Icon" style="width: 30px; height: 30px; border-radius: 50%;">
+                </div>
+                <h2>Section 2: Health Details</h2>
+            </div>
+            <label for="weight_child">Weight of Child:</label>
+            <input type="number" id="weight_child" name="weight_child" required>
+            <label for="weight_anc">Weight (ANC):</label>
+            <input type="number" id="weight_anc" name="weight_anc" required>
+            <label for="hemoglobin">Hemoglobin:</label>
+            <input type="number" id="hemoglobin" name="hemoglobin" required>
+            <label for="blood_sugar">Blood Sugar:</label>
+            <input type="number" id="blood_sugar" name="blood_sugar" required>
+            <label for="height">Height:</label>
+            <input type="number" id="height" name="height" required>
+            <label for="age_preg">Age (Pregnancy):</label>
+            <input type="number" id="age_preg" name="age_preg" required>
+            <label for="death">Death:</label>
+            <input type="text" id="death" name="death" required>
+            <label for="blood_grp">Blood Group:</label>
+            <input type="text" id="blood_grp" name="blood_grp" required>
+        </div>
+        <div class="section">
+            <div class="section-header">
+                <div class="icon">
+                    <img src="/static/4.jpeg" alt="Section Icon" style="width: 30px; height: 30px; border-radius: 50%;">
+                </div>
+                <h2>Section 3: Facility Details</h2>
+            </div>
+            <label for="district">District:</label>
+            <input type="text" id="district" name="district" required>
+            <label for="asha_dtls">ASHA Details:</label>
+            <input type="text" id="asha_dtls" name="asha_dtls" required>
+            <label for="facility_type">Facility Type:</label>
+            <input type="text" id="facility_type" name="facility_type" required>
+            <label for="facility_name">Facility Name:</label>
+            <input type="text" id="facility_name" name="facility_name" required>
+        </div>
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
