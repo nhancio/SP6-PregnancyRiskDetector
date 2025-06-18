@@ -356,7 +356,7 @@
         </select>
 
         <label for="time_of_birth">Time of Birth (HH:MM):</label>
-        <input type="text" id="time_of_birth" name="TIME_OF_BIRTH" required>
+<input type="time" id="time_of_birth" name="TIME_OF_BIRTH" required>
 
         <label for="mode_of_delivery">Delivery Method:</label>
         <select id="mode_of_delivery" name="MODE_OF_DELIVERY" required>
@@ -411,7 +411,7 @@
         <label for="age_preg">Mother's Age at Delivery:</label>
         <input type="number" id="age_preg" name="AGE_preg" required>
 
-        <label for="death">Delivery Outcome:</label>
+        <label for="death">Previous Delivery Outcome:</label>
         <select id="death" name="DEATH_df5" required>
             <option value="">Select</option>
             <option value="D0">Alive</option>
@@ -461,8 +461,98 @@
             <option value="U ">Urban Center (alt)</option>
         </select>
 
-        <label for="facility_name">Facility Name:</label>
-        <input type="text" id="facility_name" name="FACILITY_NAME_df5" required>
+                        <label for="facility_name">Facility Name:</label>
+                <select id="facility_name" name="FACILITY_NAME_df5" required>
+                <option value="">-- Select a facility --</option>
+                <option value="257">257</option>
+                <option value="309">309</option>
+                <option value="294">294</option>
+                <option value="148">148</option>
+                <option value="54">54</option>
+                <option value="402">402</option>
+                <option value="315">315</option>
+                <option value="143">143</option>
+                <option value="142">142</option>
+                <option value="121">121</option>
+                <option value="307">307</option>
+                <option value="16">16</option>
+                <option value="223">223</option>
+                <option value="297">297</option>
+                <option value="124">124</option>
+                <option value="91">91</option>
+                <option value="244">244</option>
+                <option value="255">255</option>
+                <option value="93">93</option>
+                <option value="256">256</option>
+                <option value="262">262</option>
+                <option value="96">96</option>
+                <option value="132">132</option>
+                <option value="260">260</option>
+                <option value="68">68</option>
+                <option value="169">169</option>
+                <option value="275">275</option>
+                <option value="105">105</option>
+                <option value="310">310</option>
+                <option value="287">287</option>
+                <option value="204">204</option>
+                <option value="176">176</option>
+                <option value="170">170</option>
+                <option value="219">219</option>
+                <option value="90">90</option>
+                <option value="77">77</option>
+                <option value="299">299</option>
+                <option value="203">203</option>
+                <option value="313">313</option>
+                <option value="520">520</option>
+                <option value="314">314</option>
+                <option value="519">519</option>
+                <option value="74">74</option>
+                <option value="57">57</option>
+                <option value="270">270</option>
+                <option value="191">191</option>
+                <option value="61">61</option>
+                <option value="63">63</option>
+                <option value="164">164</option>
+                <option value="101">101</option>
+                <option value="272">272</option>
+                <option value="66">66</option>
+                <option value="177">177</option>
+                <option value="99">99</option>
+                <option value="69">69</option>
+                <option value="23">23</option>
+                <option value="188">188</option>
+                <option value="140">140</option>
+                <option value="285">285</option>
+                <option value="295">295</option>
+                <option value="173">173</option>
+                <option value="79">79</option>
+                <option value="126">126</option>
+                <option value="28">28</option>
+                <option value="311">311</option>
+                <option value="226">226</option>
+                <option value="89">89</option>
+                <option value="267">267</option>
+                <option value="20">20</option>
+                <option value="5">5</option>
+                <option value="67">67</option>
+                <option value="220">220</option>
+                <option value="281">281</option>
+                <option value="48">48</option>
+                <option value="82">82</option>
+                <option value="14">14</option>
+                <option value="232">232</option>
+                <option value="263">263</option>
+                <option value="147">147</option>
+                <option value="179">179</option>
+                <option value="187">187</option>
+                <option value="243">243</option>
+                <option value="52">52</option>
+                <option value="64">64</option>
+                <option value="248">248</option>
+                <option value="195">195</option>
+                <option value="49">49</option>
+                </select>
+
     </div>
 
     <div class="section">
@@ -518,7 +608,25 @@
         </select>
 
         <label for="indication_c_section">Reason for C-Section:</label>
-        <input type="text" id="indication_c_section" name="INDICATION_FOR_C_SECTION_df5" required>
+            <select id="indication_c_section" name="INDICATION_FOR_C_SECTION_df5" required>
+            <option value="">-- Select a reason --</option>
+            <option value="Breech prajanteion">Breech prajanteion</option>
+            <option value="Ab normal ">Ab normal</option>
+            <option value="Privious c section">Privious c section</option>
+            <option value="TG with Breech">TG with Breech</option>
+            <option value="Obnarmol prajentetion">Obnarmol prajentetion</option>
+            <option value="Ubnormal condition">Ubnormal condition</option>
+            <option value="previous deleviry">previous deleviry</option>
+            <option value="LOW RESISTANCE IN MCA">LOW RESISTANCE IN MCA</option>
+            <option value="PREVS LSCS">PREVS LSCS</option>
+            <option value="Term Pains">Term Pains</option>
+            <option value="With out pains ">With out pains</option>
+            <option value="Nopenus">Nopenus</option>
+            <option value="Amniotic flouid leakage ">Amniotic flouid leakage</option>
+            <option value="Leakage of Amutic feed">Leakage of Amutic feed</option>
+            <option value="likar low">likar low</option>
+            </select>
+
 
         <label for="conduct_by">Delivery Conducted By:</label>
         <select id="conduct_by" name="CONDUCT_BY" required>

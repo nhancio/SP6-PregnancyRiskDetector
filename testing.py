@@ -16,3 +16,18 @@ with open(le_path, "rb") as le_file:
 with open(model_path, "rb") as model_file:
     model = pickle.load(model_file)
     print("✅ Model loaded")
+
+
+# Check if the column exists in the encoders
+column_name = "TIME_OF_BIRTH"
+
+if column_name in label_encoders:
+    encoder = label_encoders[column_name]
+
+    if hasattr(encoder, 'classes_'):
+        print(f"✅ Possible values for '{column_name}':")
+        print(set(encoder.classes_))
+    else:
+        print(f"⚠️ Encoder for '{column_name}' does not have 'classes_' attribute.")
+else:
+    print(f"❌ No encoder found for column: '{column_name}'")

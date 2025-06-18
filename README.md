@@ -1,7 +1,7 @@
-# AI4TG App User Journey
+
 
 ## Overview
-The AI4TG app is designed to predict outcomes based on user-provided data. It includes a login system, a dashboard for data submission, and a results page to display predictions.
+The predict app is designed to predict outcomes based on user-provided data. It includes a login system, a dashboard for data submission, and a results page to display predictions.
 
 ## User Journey
 
@@ -36,6 +36,4 @@ The AI4TG app is designed to predict outcomes based on user-provided data. It in
 ## Running the App
 1. Install dependencies listed in `requirements.txt`.
 2. Run `app.py` using Python.
-3. Access the app at `http://127.0.0.1:5000/`.
-
-Enjoy using the AI4TG app!
+3. Access the app at `https://predict.nhancio.com/`.
