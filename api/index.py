@@ -7,6 +7,11 @@ import os
 api_dir = os.path.dirname(__file__)
 model_path = os.path.join(api_dir, "preg_model.pkl")
 le_path = os.path.join(api_dir, "label_encoders.pkl")
+static_folder = os.path.join(api_dir, "static")
+template_folder = os.path.join(api_dir, "templates")
+
+app = Flask(__name__, static_folder=static_folder, template_folder=template_folder)
+
 
 try:
     with open(le_path, "rb") as f:

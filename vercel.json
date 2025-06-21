@@ -5,8 +5,8 @@
       "includeFiles": [
         "api/preg_model.pkl",
         "api/label_encoders.pkl",
-        "templates/**/*",
-        "static/**/*"
+        "api/templates/**",
+        "api/static/**"
       ]
     }
   }
