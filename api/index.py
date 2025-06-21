@@ -5,15 +5,15 @@ import os
 from flask import Flask
 app = Flask(__name__, static_folder="../static", template_folder="../templates")
 # Correct the static folder path
-base_dir = os.path.dirname(os.path.dirname(__file__))  # One level up from /api
+base_dir = os.path.dirname(os.path.dirname(__file__)) # One level up from /api
 static_folder = os.path.join(base_dir, "static")
 
 try:
-    with open(os.path.join(root_folder, "label_encoders.pkl"), "rb") as le_file:
+    with open(os.path.join(base_dir, "label_encoders.pkl"), "rb") as le_file:
         label_encoders = pickle.load(le_file)
     print("[DEBUG] Label encoders loaded successfully.")
 
-    with open(os.path.join(root_folder, "preg_model.pkl"), "rb") as model_file:
+    with open(os.path.join(base_dir, "preg_model.pkl"), "rb") as model_file:
         decision_tree_model = pickle.load(model_file)
     print("[DEBUG] Model loaded successfully.")
 
