@@ -2,30 +2,27 @@ from flask import Flask, render_template, request, redirect, url_for
 import pickle
 import numpy as np
 import os
-from flask import Flask
-app = Flask(__name__, static_folder="../static", template_folder="../templates")
-# Correct the static folder path
-base_dir = os.path.dirname(os.path.dirname(__file__))  # One level up from /api
-static_folder = os.path.join(base_dir, "static")
+
+# Set model and encoder paths to the current directory (api folder)
+api_dir = os.path.dirname(__file__)
+model_path = os.path.join(api_dir, "preg_model.pkl")
+le_path = os.path.join(api_dir, "label_encoders.pkl")
 
 try:
-    with open(os.path.join(static_folder, "label_encoders.pkl"), "rb") as le_file:
-        label_encoders = pickle.load(le_file)
-    print("[DEBUG] Label encoders loaded successfully.")
+    with open(le_path, "rb") as f:
+        label_encoders = pickle.load(f)
+    print("[DEBUG] Label encoders loaded from api folder.")
 
-    with open(os.path.join(static_folder, "preg_model.pkl"), "rb") as model_file:
-        decision_tree_model = pickle.load(model_file)
-    print("[DEBUG] Model loaded successfully.")
-
+    with open(model_path, "rb") as f:
+        decision_tree_model = pickle.load(f)
+    print("[DEBUG] Model loaded from api folder.")
 except Exception as e:
     print(f"[ERROR] Failed to load model or encoders at startup: {e}")
     label_encoders = None
     decision_tree_model = None
 
-
-
-# app = Flask(__name__, static_folder='static')
-app.config['SERVER_NAME'] = 'predict.nhancio.com'
+app = Flask(__name__, static_folder="../static", template_folder="../templates")
+# app.config['SERVER_NAME'] = 'predict.nhancio.com'
 
 # Hardcoded credentials
 USERNAME = "admin"
@@ -79,14 +76,15 @@ def submit():
     form_data = {feature: request.form.get(feature) for feature in input_features}
     print(f"[DEBUG] Form data received: {form_data}")
 
+    # Set GRAVIDA_df5 from GRAVIDA if not provided
+    if not form_data["GRAVIDA_df5"]:
+        form_data["GRAVIDA_df5"] = form_data.get("GRAVIDA", "G1")
+
     # Check for missing fields
     missing = [field for field, value in form_data.items() if value in (None, '')]
     if missing:
         print(f"[ERROR] Missing fields: {missing}")
         return f"<h1 style='color:red;'>Missing required fields: {missing}</h1>"
-
-    # Hardcode override if needed
-    form_data["GRAVIDA_df5"] = "G1"  # can remove if unnecessary
 
     # Encode form data
     encoded_data = []
@@ -128,6 +126,8 @@ def test_model():
     if decision_tree_model is None or label_encoders is None:
         return "Model or encoders not loaded"
     return "Model and encoders loaded successfully"
+print("[DEBUG] Model is None?", decision_tree_model is None)
+print("[DEBUG] Encoders is None?", label_encoders is None)
 
 if __name__ == "__main__":
     print("[DEBUG] Starting Flask app...")
