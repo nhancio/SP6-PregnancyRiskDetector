@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Results</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom right, #e0f7fa, #80deea);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 400px;
+        }
+        h1 {
+            color: #0078d7;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        p {
+            color: #333;
+            font-size: 18px;
+        }
+        button {
+            background: linear-gradient(to right, #0078d7, #005a9e);
+            color: #fff;
+            border: none;
+            padding: 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+        button:hover {
+            background: linear-gradient(to right, #005a9e, #003f6b);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Model Prediction Result</h1>
+        <p>The predicted outcome is: 
+            <strong>
+                {% if prediction == "0" %}
+                    Live
+                {% elif prediction == "1" %}
+                    Still Birth
+                {% elif prediction == "2" %}
+                    Twin Birth
+                {% elif prediction == "3" %}
+                    IUD
+                {% elif prediction == "4" %}
+                    More than Two
+                {% else %}
+                    Unknown
+                {% endif %}
+            </strong>
+        </p>
+        <form action="/dashboard">
+            <button type="submit">Back to Dashboard</button>
+        </form>
+    </div>
+</body>
+</html>
