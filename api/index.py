@@ -2,8 +2,29 @@ from flask import Flask, render_template, request, redirect, url_for
 import pickle
 import numpy as np
 import os
+from flask import Flask
+app = Flask(__name__, static_folder="../static", template_folder="../templates")
+# Correct the static folder path
+base_dir = os.path.dirname(os.path.dirname(__file__))  # One level up from /api
+static_folder = os.path.join(base_dir, "static")
 
-app = Flask(__name__, static_folder='static')
+try:
+    with open(os.path.join(static_folder, "label_encoders.pkl"), "rb") as le_file:
+        label_encoders = pickle.load(le_file)
+    print("[DEBUG] Label encoders loaded successfully.")
+
+    with open(os.path.join(static_folder, "preg_model.pkl"), "rb") as model_file:
+        decision_tree_model = pickle.load(model_file)
+    print("[DEBUG] Model loaded successfully.")
+
+except Exception as e:
+    print(f"[ERROR] Failed to load model or encoders at startup: {e}")
+    label_encoders = None
+    decision_tree_model = None
+
+
+
+# app = Flask(__name__, static_folder='static')
 app.config['SERVER_NAME'] = 'predict.nhancio.com'
 
 # Hardcoded credentials
@@ -44,16 +65,16 @@ def submit():
     # Load label encoders and decision tree model directly from the static folder
     static_folder = os.path.join(app.root_path, 'static')
     print(f"[DEBUG] Static folder path: {static_folder}")
-    try:
-        with open(os.path.join(static_folder, "label_encoders.pkl"), "rb") as le_file:
-            label_encoders = pickle.load(le_file)
-        print("[DEBUG] Label encoders loaded successfully.")
-        with open(os.path.join(static_folder, "preg_model.pkl"), "rb") as model_file:
-            decision_tree_model = pickle.load(model_file)
-        print("[DEBUG] Model loaded successfully.")
-    except Exception as e:
-        print(f"[ERROR] Failed to load model or encoders: {e}")
-        return render_template("dashboard.html", error=f"File not found or load error: {e}")
+    # try:
+    #     with open(os.path.join(static_folder, "label_encoders.pkl"), "rb") as le_file:
+    #         label_encoders = pickle.load(le_file)
+    #     print("[DEBUG] Label encoders loaded successfully.")
+    #     with open(os.path.join(static_folder, "preg_model.pkl"), "rb") as model_file:
+    #         decision_tree_model = pickle.load(model_file)
+    #     print("[DEBUG] Model loaded successfully.")
+    # except Exception as e:
+    #     print(f"[ERROR] Failed to load model or encoders: {e}")
+    #     return render_template("dashboard.html", error=f"File not found or load error: {e}")
 
     # List of input features
     input_features = ['DELIVERY_MODE_df5', 'BP_df5', 'DEL_COMPLICATIONS',
@@ -106,7 +127,7 @@ def submit():
 
     # Redirect to the results page with the prediction
     print(f"[DEBUG] Redirecting to results with prediction: {prediction[0]}")
-    return redirect(url_for("results", prediction=prediction[0], _external=True, _scheme="https"))
+    return redirect(url_for("results", prediction=prediction[0]))
 
 if __name__ == "__main__":
     print("[DEBUG] Starting Flask app...")
