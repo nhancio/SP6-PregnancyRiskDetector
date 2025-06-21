@@ -4,6 +4,7 @@ import numpy as np
 import os
 
 app = Flask(__name__, static_folder='static')
+app.config['SERVER_NAME'] = 'predict.nhancio.com'
 
 # Hardcoded credentials
 USERNAME = "admin"
@@ -19,6 +20,7 @@ def login():
         if username == USERNAME and password == PASSWORD:
             print("[DEBUG] Login successful, redirecting to dashboard.")
             return redirect(url_for("dashboard"))
+            # return redirect(url_for("dashboard", _external=True, _scheme="https"))
         else:
             print("[DEBUG] Login failed. Invalid credentials.")
             return render_template("login.html", error="Invalid credentials. Please try again.")
@@ -66,12 +68,6 @@ def submit():
     print(f"[DEBUG] Form data collected: {form_data}")
     form_data["GRAVIDA_df5"] = "G1"  # Hardcoded value for GRAVIDA_df5
 
-    # Validate form data
-    # for key, value in form_data.items():
-    #     if value is None or value == "":
-    #         print(f"[ERROR] Missing value for {key}")
-    #         return render_template("dashboard.html", error=f"Missing value for {key}")
-
     # Encode form data using label encoders
     print("[DEBUG] Encoding form data...")
     encoded_data = []
@@ -110,7 +106,7 @@ def submit():
 
     # Redirect to the results page with the prediction
     print(f"[DEBUG] Redirecting to results with prediction: {prediction[0]}")
-    return redirect(url_for("results", prediction=prediction[0]))
+    return redirect(url_for("results", prediction=prediction[0], _external=True, _scheme="https"))
 
 if __name__ == "__main__":
     print("[DEBUG] Starting Flask app...")
