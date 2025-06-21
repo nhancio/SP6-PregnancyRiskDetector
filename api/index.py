@@ -21,7 +21,7 @@ except Exception as e:
     label_encoders = None
     decision_tree_model = None
 
-app = Flask(__name__, static_folder="../static", template_folder="../templates")
+app = Flask(__name__, static_folder="static", template_folder="templates")
 # app.config['SERVER_NAME'] = 'predict.nhancio.com'
 
 # Hardcoded credentials
@@ -48,12 +48,6 @@ def login():
 def dashboard():
     print("[DEBUG] Entered dashboard route.")
     return render_template("dashboard.html")
-
-@app.route("/results")
-def results():
-    prediction = request.args.get("prediction")
-    print(f"[DEBUG] Entered results route. Prediction: {prediction}")
-    return render_template("results.html", prediction=prediction)
 
 @app.route("/submit", methods=["POST"])
 def submit():
@@ -121,14 +115,13 @@ def submit():
     return redirect(url_for("results", prediction=prediction))
 
 
-@app.route("/test_model")
-def test_model():
-    if decision_tree_model is None or label_encoders is None:
-        return "Model or encoders not loaded"
-    return "Model and encoders loaded successfully"
-print("[DEBUG] Model is None?", decision_tree_model is None)
-print("[DEBUG] Encoders is None?", label_encoders is None)
+@app.route("/results")
+def results():
+    prediction = request.args.get("prediction")
+    print(f"[DEBUG] Entered results route. Prediction: {prediction}")
+    return render_template("results.html", prediction=prediction)
 
-if __name__ == "__main__":
-    print("[DEBUG] Starting Flask app...")
-    app.run(debug=False)
+
+# if __name__ == "__main__":
+#     print("[DEBUG] Starting Flask app...")
+#     app.run(debug=False)
