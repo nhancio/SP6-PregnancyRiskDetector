@@ -122,6 +122,6 @@ def results():
     return render_template("results.html", prediction=prediction)
 
 
-# if __name__ == "__main__":
-#     print("[DEBUG] Starting Flask app...")
-#     app.run(debug=False)
+if __name__ == "__main__":
+    print("[DEBUG] Starting Flask app...")
+    app.run(debug=False)
