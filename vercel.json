@@ -2,7 +2,7 @@
   "functions": {
     "api/index.py": {
       "runtime": "python3.9",
-      "includeFiles": [
+      "includedFiles": [
         "api/preg_model.pkl",
         "api/label_encoders.pkl",
         "api/templates/**",
