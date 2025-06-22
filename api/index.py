@@ -26,7 +26,7 @@ except Exception as e:
     label_encoders = None
     decision_tree_model = None
 
-app = Flask(__name__, static_folder="static", template_folder="templates")
+# app = Flask(__name__, static_folder="static", template_folder="templates")
 # app.config['SERVER_NAME'] = 'predict.nhancio.com'
 
 # Hardcoded credentials
